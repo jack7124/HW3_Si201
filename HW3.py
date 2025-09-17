@@ -50,6 +50,13 @@ class FortuneCookieJar:
             str
         """
         # TODO: Implement per spec
+        if not self.fortune_slips:
+            return ""
+        
+        result = self.fortune_slips[0]
+        for slip in self.fortune_slips[1:]:
+            result += slip + "-"
+        return result
         pass
 
     def assign_fortune(self, name):
