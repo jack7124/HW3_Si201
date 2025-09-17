@@ -173,20 +173,20 @@ class FortuneCookieJar:
                     # if not empty, print each name and their corresponding fortune using spec format
                 else:
                     for i in range(len(self.name_roster)):
-
                         fortune = self.fortune_slips[self.dealt_indices[i]]
                         print(f"{self.name_roster[i]}: {fortune}")
+                        
                     
             else:
                 # if not "Done" or "list", we treat input as names
                 names = user_input.split(",")
-            for name in names:
-                name = name.strip()
-                if name:
-                    result = self.assign_fortune(name)
-                    print(result)
-                    if result == "The jar is empty—no fortunes left to assign.":
-                        break
+                for name in names:
+                    name = name.strip()
+                    if name:
+                        result = self.assign_fortune(name)
+                        print(result)
+                        if result == "The jar is empty—no fortunes left to assign.":
+                            break
             turn += 1
         pass
 
@@ -211,31 +211,35 @@ class FortuneCookieJar:
             print("Empty")
             return []
 
-        # initializing frequency list with zeros
+
         frequency = len(self.fortune_slips) * [0]
         
         for idx in self.dealt_indices:
             frequency[idx] += 1
             
-        # creating a list of tuples (count, fortune_data) to sort by count
-        # count is frequency[i] and fortune_data is self.fortune_slips[i].lower()
+        
         real_tallies = []
         for i in range(len(frequency)):
             count = frequency[i]
             fortune_data = self.fortune_slips[i].lower()
             real_tallies.append((count, fortune_data))
-        
-        # sorting by count in descending order
+            
         real_tallies.sort(reverse=True)
 
         lines = []
-        # building the final output lines in the specified format
         for count, fortune_data in real_tallies:
                 lines.append(f"{count} - {fortune_data}")
         
         return lines       
-    
+
+
+
         
+
+
+
+
+        # TODO: Implement per spec
         pass
 
 
@@ -257,11 +261,15 @@ def main():
     ]
 
     # TODO: Construct the jar, run the session, then show tallies
+    # jar = FortuneCookieJar(fortunes)
+    # jar.distribute_session()
+    # tallies = jar.tally_distribution()
+    # print(tallies)
     jar = FortuneCookieJar(fortunes)
     jar.distribute_session()
     tallies = jar.tally_distribution()
-    for line in tallies:
-        print(line)
+    print(tallies)
+    pass
 
 
 # -----------------------
@@ -443,6 +451,6 @@ def jar_sanity_check():
 
 # Uncomment one or both to try locally:
 if __name__ == "__main__":
-    main()
-    #test()
-    # jar_sanity_check() #TODO: Uncomment if you do the extra credit
+    # main()
+    # test()
+    # jar_sanity_check() #TODO: Uncomment if you do the extra credit 
