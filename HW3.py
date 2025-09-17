@@ -177,7 +177,7 @@ class FortuneCookieJar:
                         print(f"{self.name_roster[i]}: {fortune}")
                         # this counts as input therefore a turn so we increment again
                     turn += 1
-                    continue
+                    
             else:
                 # if not "Done" or "list", we treat input as names
                 names = user_input.split(",")
@@ -208,6 +208,38 @@ class FortuneCookieJar:
         Returns:
             list[str]: formatted frequency lines
         """
+        if not self.dealt_indices:
+            print("Empty")
+            return []
+
+
+        frequency = len(self.fortune_slips) * [0]
+        
+        for idx in self.dealt_indices:
+            frequency[idx] += 1
+            
+        
+        real_tallies = []
+        for i in range(len(frequency)):
+            count = frequency[i]
+            fortune_data = self.fortune_slips[i].lower()
+            real_tallies.append((count, fortune_data))
+            
+        real_tallies.sort(reverse=True)
+
+        lines = []
+        for count, fortune_data in real_tallies:
+                lines.append(f"{count} - {fortune_data}")
+        
+        return lines       
+
+
+
+        
+
+
+
+
         # TODO: Implement per spec
         pass
 
