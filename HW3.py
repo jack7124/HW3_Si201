@@ -173,9 +173,9 @@ class FortuneCookieJar:
                     # if not empty, print each name and their corresponding fortune using spec format
                 else:
                     for i in range(len(self.name_roster)):
+
                         fortune = self.fortune_slips[self.dealt_indices[i]]
                         print(f"{self.name_roster[i]}: {fortune}")
-                        
                     
             else:
                 # if not "Done" or "list", we treat input as names
@@ -235,7 +235,7 @@ class FortuneCookieJar:
         
         return lines       
     
-        # TODO: Implement per spec
+        
         pass
 
 
@@ -257,11 +257,11 @@ def main():
     ]
 
     # TODO: Construct the jar, run the session, then show tallies
-    # jar = FortuneCookieJar(fortunes)
-    # jar.distribute_session()
-    # tallies = jar.tally_distribution()
-    # print(tallies)
-    pass
+    jar = FortuneCookieJar(fortunes)
+    jar.distribute_session()
+    tallies = jar.tally_distribution()
+    for line in tallies:
+        print(line)
 
 
 # -----------------------
@@ -443,6 +443,6 @@ def jar_sanity_check():
 
 # Uncomment one or both to try locally:
 if __name__ == "__main__":
-    # main()
-    test()
+    main()
+    #test()
     # jar_sanity_check() #TODO: Uncomment if you do the extra credit
