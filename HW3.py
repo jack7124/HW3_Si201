@@ -37,6 +37,7 @@ class FortuneCookieJar:
 
         """
         # TODO: Implement per spec
+        # fortnite battle pass 
         self.fortune_slips = fortunes
         self.name_roster = []
         self.dealt_indices = []
@@ -52,10 +53,15 @@ class FortuneCookieJar:
             str
         """
         # TODO: Implement per spec
+        # checking if the fortune slips list is empty
         if not self.fortune_slips:
             return ""
+        
+        # starting with an empty result string
         result = ""
         i = 0
+
+        # while loop to concatenate each fortune with a dash in between while checking if it's the last element
         while i < len(self.fortune_slips):
             result += self.fortune_slips[i]
             if i != len(self.fortune_slips) - 1:
@@ -94,16 +100,25 @@ class FortuneCookieJar:
         """
         # TODO: Implement per spec
         if name in self.name_roster:
+            # tracking the position of the name in the roster
             pos = self.name_roster.index(name)
             fortune = self.fortune_slips[self.dealt_indices[pos]]
+                # I'm using f strings here to make it easier to read and write
             return f'That name already has a fortune: {fortune}'
+        
         else: 
+            # start with an empty index list
             available_indices = []
             for i in range(len(self.fortune_slips)):
+                # checking if the index is already dealt
                 if i not in self.dealt_indices:
                     available_indices.append(i)
+
+            # if available indices is empty, return the empty jar message
             if not available_indices:
                 return "The jar is empty—no fortunes left to assign."
+            
+            # choose a random index from the available indices and append the name and index to their respective lists
             chosen_index = random.choice(available_indices)
             self.name_roster.append(name)
             self.dealt_indices.append(chosen_index)
@@ -141,23 +156,30 @@ class FortuneCookieJar:
         """
         # TODO: Implement per spec (input()/print() loop)
         turn = 1
+
         while True:
+            # this consolidates the prompt format in one line with the input and current turn number
             user_input = input(f"Turn {turn} - Enter a name (or a comma-separated list), or type 'list' or 'Done': ")
             
 
             if user_input == "Done":
                 print("Goodbye! See you soon.")
                 break
+
             elif user_input == "list":
+                # similar to the assign_fortune function, if the roster is empty, print the empty jar message
                 if not self.name_roster:
                     print("The jar is empty—no fortunes left to assign.")
+                    # if not empty, print each name and their corresponding fortune using spec format
                 else:
                     for i in range(len(self.name_roster)):
                         fortune = self.fortune_slips[self.dealt_indices[i]]
                         print(f"{self.name_roster[i]}: {fortune}")
+                        # this counts as input therefore a turn so we increment again
                     turn += 1
                     continue
             else:
+                # if not "Done" or "list", we treat input as names
                 names = user_input.split(",")
             for name in names:
                 name = name.strip()
