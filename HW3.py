@@ -159,7 +159,9 @@ class FortuneCookieJar:
 
         while True:
             # this consolidates the prompt format in one line with the input and current turn number
-            user_input = input(f"Turn {turn} - Enter a name (or a comma-separated list), or type 'list' or 'Done': ")
+            print(f"Turn {turn} - Enter a name (or a comma-separated list), or type 'list' or 'Done': ")
+            user_input = input()
+            
             
 
             if user_input == "Done":
@@ -173,9 +175,13 @@ class FortuneCookieJar:
                     # if not empty, print each name and their corresponding fortune using spec format
                 else:
                     for i in range(len(self.name_roster)):
-                        fortune = self.fortune_slips[self.dealt_indices[i]]
-                        print(f"{self.name_roster[i]}: {fortune}")
-                        
+                        fortune_ = self.fortune_slips[self.dealt_indices[i]]
+                        print(f"{self.name_roster[i]}: {fortune_}")
+
+        # example function to detect when roster > fortunes avalible 
+        # for i in range(len(self.name_roster)):
+        #     while i >= len(self.fortune_slips):
+        #         fortune_ = "The jar is empty—no fortunes left to assign."
                     
             else:
                 # if not "Done" or "list", we treat input as names
@@ -185,8 +191,8 @@ class FortuneCookieJar:
                     if name:
                         result = self.assign_fortune(name)
                         print(result)
-                        if result == "The jar is empty—no fortunes left to assign.":
-                            break
+                        #if result == "The jar is empty—no fortunes left to assign.":
+                            #break
             turn += 1
         pass
 
@@ -443,14 +449,54 @@ def test():
     print(f"\nTests passed: {passed}/{total}")
 
 def jar_sanity_check():
-    """
-    Extra credit tests for your own custom scenarios.
-    """
-    print("Extra credit tests not implemented yet.")
+    
+    # correct tally_distribution output test when
+    # dealt indices is empty
+    jar67 = FortuneCookieJar(["A", "B"])
+    jar67.name_roster = ["X", "Y", "Z"]
+    jar67.dealt_indices = []
+    adrian = jar67.tally_distribution()
+    print(adrian)
+
+    # With
+    #fortune_slips = ['trust the process', 'ask for help', 'enjoy the
+    #little things']
+    #dealt_indices = [2, 1, 2]
+    #confirm counts and sort order
+    explain = FortuneCookieJar(['trust the process', 'ask for help', 'enjoy the little things'])
+    explain.name_roster = ['a', 'b', 'c']
+    explain.dealt_indices = [2, 1, 2]
+    our = explain.tally_distribution()
+    print(our)
+
+    # Correct initial prompt from distribute_session()
+    friend = FortuneCookieJar(['one', 'two'])
+    output = _capture_session_output(friend, ["Done"])
+    print(output)
+
+    # Correct re-report behavior from assign_fortune() for an existing name
+    pal = FortuneCookieJar(['red', 'blue'])
+    pal.name_roster = ['alice']
+    pal.dealt_indices = [0]
+    message = pal.assign_fortune('alice')
+    print(message)
+
+    # Confirm that comma-separated inputs assign fortunes without duplication
+    # and that list prints assignments in order
+    buddy = FortuneCookieJar(['cat', 'dog', 'fish'])
+    output2 = _capture_session_output(buddy, ["Eve, Frank", "list", "Done"])
+    print(output2)
+    
+
+
+    #Extra credit tests for your own custom scenarios.
+    
+    #print("Extra credit tests not implemented yet.")
     pass
 
 # Uncomment one or both to try locally:
 if __name__ == "__main__":
-    # main()
-    # test()
-    # jar_sanity_check() #TODO: Uncomment if you do the extra credit 
+    #main()
+    #test()
+    jar_sanity_check() 
+    #   tODO:Uncomment if you do the extra credit
