@@ -211,34 +211,30 @@ class FortuneCookieJar:
             print("Empty")
             return []
 
-
+        # initializing frequency list with zeros
         frequency = len(self.fortune_slips) * [0]
         
         for idx in self.dealt_indices:
             frequency[idx] += 1
             
-        
+        # creating a list of tuples (count, fortune_data) to sort by count
+        # count is frequency[i] and fortune_data is self.fortune_slips[i].lower()
         real_tallies = []
         for i in range(len(frequency)):
             count = frequency[i]
             fortune_data = self.fortune_slips[i].lower()
             real_tallies.append((count, fortune_data))
-            
+        
+        # sorting by count in descending order
         real_tallies.sort(reverse=True)
 
         lines = []
+        # building the final output lines in the specified format
         for count, fortune_data in real_tallies:
                 lines.append(f"{count} - {fortune_data}")
         
         return lines       
-
-
-
-        
-
-
-
-
+    
         # TODO: Implement per spec
         pass
 
