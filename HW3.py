@@ -1,10 +1,12 @@
 # Name: Jackson Miller
 # Student ID: 7012 3312
 # Email:
-# Who or what you worked with on this homework (including generative AI like ChatGPT):
+# Who or what you worked with on this homework (including generative AI like ChatGPT): Gemini pro and chatgpt
 # If you worked with generative AI also add a statement for how you used it.  
 # e.g.: 
 # Asked ChatGPT hints for debugging and suggesting the general sturcture of the code
+# Asked Gemini pro for help with debugging and code structure suggestions
+# asked copilot for suggestions on how to implement certain functions without giving away the answer
 
 import random
 import io
@@ -52,10 +54,13 @@ class FortuneCookieJar:
         # TODO: Implement per spec
         if not self.fortune_slips:
             return ""
-        
-        result = self.fortune_slips[0]
-        for slip in self.fortune_slips[1:]:
-            result += slip + "-"
+        result = ""
+        i = 0
+        while i < len(self.fortune_slips):
+            result += self.fortune_slips[i]
+            if i != len(self.fortune_slips) - 1:
+                result += "-"
+            i += 1
         return result
         pass
 
@@ -88,6 +93,21 @@ class FortuneCookieJar:
             str: message as described above
         """
         # TODO: Implement per spec
+        if name in self.name_roster:
+            pos = self.name_roster.index(name)
+            fortune = self.fortune_slips[self.dealt_indices[pos]]
+            return f'That name already has a fortune: {fortune}'
+        else: 
+            available_indices = []
+            for i in range(len(self.fortune_slips)):
+                if i not in self.dealt_indices:
+                    available_indices.append(i)
+            if not available_indices:
+                return "The jar is empty—no fortunes left to assign."
+            chosen_index = random.choice(available_indices)
+            self.name_roster.append(name)
+            self.dealt_indices.append(chosen_index)
+            return f'{self.fortune_slips[chosen_index]}'
         pass
 
     def distribute_session(self):
