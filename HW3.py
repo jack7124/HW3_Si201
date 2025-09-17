@@ -175,8 +175,7 @@ class FortuneCookieJar:
                     for i in range(len(self.name_roster)):
                         fortune = self.fortune_slips[self.dealt_indices[i]]
                         print(f"{self.name_roster[i]}: {fortune}")
-                        # this counts as input therefore a turn so we increment again
-                    turn += 1
+                        
                     
             else:
                 # if not "Done" or "list", we treat input as names
