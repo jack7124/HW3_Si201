@@ -140,6 +140,33 @@ class FortuneCookieJar:
           - You may increment a counter each loop OR compute len(name_roster) + 1
         """
         # TODO: Implement per spec (input()/print() loop)
+        turn = 1
+        while True:
+            user_input = input(f"Turn {turn} - Enter a name (or a comma-separated list), or type 'list' or 'Done': ")
+            
+
+            if user_input == "Done":
+                print("Goodbye! See you soon.")
+                break
+            elif user_input == "list":
+                if not self.name_roster:
+                    print("The jar is empty—no fortunes left to assign.")
+                else:
+                    for i in range(len(self.name_roster)):
+                        fortune = self.fortune_slips[self.dealt_indices[i]]
+                        print(f"{self.name_roster[i]}: {fortune}")
+                    turn += 1
+                    continue
+            else:
+                names = user_input.split(",")
+            for name in names:
+                name = name.strip()
+                if name:
+                    result = self.assign_fortune(name)
+                    print(result)
+                    if result == "The jar is empty—no fortunes left to assign.":
+                        break
+            turn += 1
         pass
 
     def tally_distribution(self):
